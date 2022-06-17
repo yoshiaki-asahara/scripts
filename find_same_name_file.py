@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import glob
-import subprocess
 import os
 import subprocess
 import sys
@@ -71,11 +70,15 @@ for file1 in files1:
             elif(key == ';'):
                 file = file1
                 print('play ' + file)
-                subprocess.call(["open", "/Applications/VLC.app", file])
+                subprocess.Popen(["vlc", file],
+                                 stdout=subprocess.DEVNULL,
+                                 stderr=subprocess.DEVNULL)
             elif(key == '/'):
                 file = file2
                 print('play ' + file)
-                subprocess.call(["open", "/Applications/VLC.app", file])
+                subprocess.Popen(["vlc", file],
+                                 stdout=subprocess.DEVNULL,
+                                 stderr=subprocess.DEVNULL)
             elif(key == '\''):
                 print('skip')
                 break

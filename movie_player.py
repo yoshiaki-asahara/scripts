@@ -25,19 +25,19 @@ class HistoryManager(object):
     def __init__(self, favorite_mode):
         self._history_data = {}
         # If history file doesn't exist, create it.
-        if not os.path.isfile(self.CSV_NAME):
-            with open(self.CSV_NAME, 'w') as f:
-                csv_file = csv.DictWriter(f, fieldnames=self.FIELD_NAMES)
-                csv_file.writeheader()
+        # if not os.path.isfile(self.CSV_NAME):
+        #     with open(self.CSV_NAME, 'w') as f:
+        #         csv_file = csv.DictWriter(f, fieldnames=self.FIELD_NAMES)
+        #         csv_file.writeheader()
         # Read history file and make history list.
-        with open(self.CSV_NAME, 'r') as f:
-            rows = csv.DictReader(f)
-            for row in rows:
-                # key : file
-                # item: [num_played, num_finished]
-                self._history_data[row[self.FIELD_NAMES[0]]] = [
-                    int(row[self.FIELD_NAMES[1]]),
-                    int(row[self.FIELD_NAMES[2]])]
+        # with open(self.CSV_NAME, 'r') as f:
+        #     rows = csv.DictReader(f)
+        #     for row in rows:
+        #         # key : file
+        #         # item: [num_played, num_finished]
+        #         self._history_data[row[self.FIELD_NAMES[0]]] = [
+        #             int(row[self.FIELD_NAMES[1]]),
+        #             int(row[self.FIELD_NAMES[2]])]
 
         self._favorite_mode = favorite_mode
 
@@ -66,15 +66,15 @@ class HistoryManager(object):
             if all_played:
                 for key in self._history_data.keys():
                     self._history_data[key][0] = 0
-        with open(self.CSV_NAME, 'w') as f:
-            csv_file = csv.DictWriter(f, fieldnames=self.FIELD_NAMES)
-            csv_file.writeheader()
-            for key in self._history_data.keys():
-                csv_file.writerow(
-                    {self.FIELD_NAMES[0]: key,
-                     self.FIELD_NAMES[1]: self._history_data[key][0],
-                     self.FIELD_NAMES[2]: self._history_data[key][1]})
-            print(self.CSV_NAME + ' closed')
+        # with open(self.CSV_NAME, 'w') as f:
+        #     csv_file = csv.DictWriter(f, fieldnames=self.FIELD_NAMES)
+        #     csv_file.writeheader()
+        #     for key in self._history_data.keys():
+        #         csv_file.writerow(
+        #             {self.FIELD_NAMES[0]: key,
+        #              self.FIELD_NAMES[1]: self._history_data[key][0],
+        #              self.FIELD_NAMES[2]: self._history_data[key][1]})
+        #     print(self.CSV_NAME + ' closed')
 
     def play_list(self, files_in_current):
         self._initial_files = files_in_current
@@ -160,7 +160,7 @@ class MoviePlayerMachine(object):
         self._num_files = len(self._play_list)
 
     def play_movie(self):
-        subprocess.run(["vlc", self._file],
+        subprocess.Popen(["vlc", self._file],
                        stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL)
         self._history_manager.played(self._file)
