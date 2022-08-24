@@ -160,7 +160,7 @@ class MoviePlayerMachine(object):
         self._num_files = len(self._play_list)
 
     def play_movie(self):
-        subprocess.Popen(["totem", self._file],
+        subprocess.Popen(["vlc", self._file],
                        stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL)
         self._history_manager.played(self._file)
